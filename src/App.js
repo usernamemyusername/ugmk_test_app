@@ -1,24 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import * as React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import ProductsStore from "./store/products";
+import useLocalStore from "./hooks/use-local-store";
+
+import { ProductsGraph } from "./components/products-graph";
+import { FactoryDetails } from "./components/factory-details";
+
+import "./App.css";
+
+//TODO: in /routes folder
+export const ContextData = React.createContext();
 
 function App() {
+  const store = useLocalStore(ProductsStore);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <ContextData.Provider value={store}>
+                <ProductsGraph />
+              </ContextData.Provider>
+            }
+          />
+
+          <Route
+            path="/factory"
+            element={
+              <ContextData.Provider value={store}>
+                <FactoryDetails />
+              </ContextData.Provider>
+            }
+          />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 
