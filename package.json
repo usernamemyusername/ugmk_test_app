@@ -18,12 +18,12 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "server": "json-server --watch products.json --port 3001",
+    "server": "json-server products.json --port 3001",
     "client": "PORT=3000 react-scripts start",
     "start": "concurrently \"npm run client\" \"npm run server\"",
     "build": "react-scripts build",
     "dockerize": "sudo docker image build -t ugmk_test_app:latest .",
-    "start-container": "sudo docker run -p 3000:80 --rm ugmk_test_app"
+    "start-container": "sudo docker run -p 3000:80 --add-host=host.docker.internal:host-gateway  --rm ugmk_test_app"
   },
   "eslintConfig": {
     "extends": [

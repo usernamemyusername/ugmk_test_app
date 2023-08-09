@@ -38,12 +38,16 @@ export class ApiRequest {
       this.meta.error();
     });
 
-    const data = await response.json();
+    try {
+      const data = await response.json();
 
-    if (data) {
-      this.meta.success();
+      if (data) {
+        this.meta.success();
+      }
+
+      return data;
+    } catch (e) {
+      console.error(e);
     }
-
-    return data;
   }
 }
