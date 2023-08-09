@@ -18,25 +18,12 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <ContextData.Provider value={store}>
-                <ProductsGraph />
-              </ContextData.Provider>
-            }
-          />
-
-          <Route
-            path="/factory"
-            element={
-              <ContextData.Provider value={store}>
-                <FactoryDetails />
-              </ContextData.Provider>
-            }
-          />
-        </Routes>
+        <ContextData.Provider value={store}>
+          <Routes>
+            <Route path="/" element={<ProductsGraph />} />
+            <Route path="/factory" element={<FactoryDetails />} />
+          </Routes>
+        </ContextData.Provider>
       </div>
     </BrowserRouter>
   );
