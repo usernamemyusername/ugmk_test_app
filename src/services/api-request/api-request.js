@@ -1,11 +1,8 @@
 import { makeObservable, observable } from "mobx";
-import { Meta } from "../utils/stores/meta/meta";
 
-//TODO: in constants
-export const METHODS = {
-  GET: "GET",
-  POST: "POST",
-};
+import { Meta } from "../../utils/stores/meta";
+
+import { METHODS } from "./constants";
 
 export class ApiRequest {
   url;

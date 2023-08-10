@@ -76,7 +76,8 @@ export class Graph {
           value: index,
           label,
         };
-      })
+      }),
+      "products"
     );
 
     this._dataset = datasets

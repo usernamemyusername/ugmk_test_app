@@ -1,4 +1,4 @@
-import { makeObservable, computed, action, observable } from "mobx";
+import { makeObservable, action, observable } from "mobx";
 
 export class Meta {
   isLoading = false;
