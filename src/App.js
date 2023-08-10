@@ -15,6 +15,7 @@ export const ContextData = React.createContext();
 function App() {
   const store = useLocalStore(ProductsStore);
 
+  //TODO: routes component. Routes names in constants
   return (
     <BrowserRouter>
       <div className="App">

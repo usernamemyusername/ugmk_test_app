@@ -1,6 +1,6 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
-import { Link } from "react-router-dom";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,11 +10,11 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { Bar } from "react-chartjs-2";
+import { Bar, getElementAtEvent } from "react-chartjs-2";
 
 import { ContextData } from "../../App";
-import { createDataset } from "./utils";
-import { ChartOptions, Months } from "./constants";
+import { ChartOptions } from "./constants";
+import { Selector } from "../ui/selector";
 
 ChartJS.register(
   CategoryScale,
@@ -27,28 +27,41 @@ ChartJS.register(
 
 function ProductsGraph() {
   const store = React.useContext(ContextData);
+  const chartRef = React.useRef();
+  const navigate = useNavigate();
 
-  const data = React.useMemo(() => {
-    //TODO: in store, get rid of memo
-    const dataset = createDataset(store.data);
-    const dataFromDataset = Object.values(dataset);
+  const onClick = (event) => {
+    const element = getElementAtEvent(chartRef.current, event)[0];
 
-    const config = {
-      labels: Months,
-      datasets: dataFromDataset,
-    };
+    if (!element) {
+      return;
+    }
 
-    return config;
-  }, [store.data]);
+    const { index, datasetIndex } = element;
+
+    if (index === undefined || datasetIndex === undefined) {
+      return;
+    }
+
+    navigate({
+      pathname: "/factory",
+      search: `?factoryId=${datasetIndex}&month=${index}`,
+    });
+  };
+
+  if (!store.graph.dataset) {
+    return <React.Fragment />;
+  }
 
   return (
     <>
-      <Bar options={ChartOptions} data={data} />;
-      {/* {store.data.map((element) => (
-        <Link to={`/factory?id=${element.factoryId}`}>
-          <span>hey </span>
-        </Link>
-      ))} */}
+      <Selector name="selector" context={store.graph.selector} />
+      <Bar
+        ref={chartRef}
+        options={ChartOptions}
+        data={store.graph.dataset}
+        onClick={onClick}
+      />
     </>
   );
 }

@@ -1,12 +1,65 @@
 import { observer } from "mobx-react-lite";
 import * as React from "react";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Pie } from "react-chartjs-2";
 import { ContextData } from "../../App";
+
+ChartJS.register(ArcElement, Tooltip, Legend);
+
+export const data = {
+  labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+  datasets: [
+    {
+      label: "# of Votes",
+      data: [12, 19, 3, 5, 2, 3],
+      backgroundColor: [
+        "rgba(255, 99, 132, 0.2)",
+        "rgba(54, 162, 235, 0.2)",
+        "rgba(255, 206, 86, 0.2)",
+        "rgba(75, 192, 192, 0.2)",
+        "rgba(153, 102, 255, 0.2)",
+        "rgba(255, 159, 64, 0.2)",
+      ],
+      borderColor: [
+        "rgba(255, 99, 132, 1)",
+        "rgba(54, 162, 235, 1)",
+        "rgba(255, 206, 86, 1)",
+        "rgba(75, 192, 192, 1)",
+        "rgba(153, 102, 255, 1)",
+        "rgba(255, 159, 64, 1)",
+      ],
+      borderWidth: 1,
+    },
+  ],
+};
 
 export function FactoryDetails() {
   const store = React.useContext(ContextData);
 
-  console.log("store isssss", store);
-  return <div>DAT IS DETAILS!!</div>;
+  const dataset = React.useMemo(() => {
+    if (!store.graph.dataset) {
+      return null;
+    }
+
+    const searchParams = new URLSearchParams(document.location.search);
+
+    const factoryId = searchParams.get("factoryId");
+    const monthId = searchParams.get("monthId");
+
+    const target = store.graph.getDataWithParams(
+      Number(factoryId),
+      Number(monthId)
+    );
+
+    return target;
+  }, [store.graph.dataset]);
+
+  if (!dataset) {
+    //TODO: spinner
+    return null;
+  }
+
+  return <Pie data={dataset} />;
 }
 
 export default observer(FactoryDetails);

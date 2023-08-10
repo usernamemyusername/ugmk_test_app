@@ -2,15 +2,18 @@ import { makeObservable, computed, action, observable } from "mobx";
 import { ApiRequest } from "../../services/api-request";
 import { API } from "../../api";
 import { Products as ProductsDataStore } from "../../models/product/store";
+import { Graph } from "./graph";
 
 export default class Products {
   products = new ProductsDataStore();
+  graph = new Graph();
   request = new ApiRequest(API.PRODUCTS);
 
   constructor() {
     makeObservable(this, {
       products: observable.ref,
       request: observable.ref,
+      graph: observable.ref,
       data: computed,
       meta: computed,
       fetch: action,
@@ -28,6 +31,7 @@ export default class Products {
 
     if (!this.request.meta.isError) {
       this.products.toClientFormat(data);
+      this.graph.createDataset(this.products.data);
     }
   }
 
