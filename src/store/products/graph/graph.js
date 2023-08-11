@@ -1,9 +1,14 @@
 import { makeObservable, computed, action, observable } from "mobx";
 
-import { rand } from "../../../utils/rand";
 import { Selector } from "../../selector";
 
-import { FactoryNames, LabelNames, Months } from "./constants";
+import {
+  BackgroundFactoryColors,
+  BackgroundProductColors,
+  FactoryNames,
+  LabelNames,
+  Months,
+} from "./constants";
 
 export class Graph {
   _dataset = [];
@@ -52,19 +57,14 @@ export class Graph {
       const target = targetFactory[product.date.getMonth()];
 
       const total =
-        target.total +
-        Number(product.product1) +
-        Number(product.product2) +
-        Number(product.product3);
+        target.total + Number(product.product1) + Number(product.product2);
       const product1 = target.product1 + product.product1;
       const product2 = target.product2 + product.product2;
-      const product3 = target.product3 + product.product3;
 
       targetFactory[product.date.getMonth()] = {
         total,
         product1,
         product2,
-        product3,
       };
     });
 
@@ -86,12 +86,9 @@ export class Graph {
 
         return {
           data: Object.values(element),
-          label: "Factory " + FactoryNames[factoryId - 1],
+          label: "Factory " + FactoryNames[factoryId],
           id: factoryId,
-          backgroundColor: `rgba(${rand(0, 255)}, ${rand(0, 255)}, ${rand(
-            0,
-            255
-          )}, 0.5)`,
+          backgroundColor: BackgroundFactoryColors[factoryId],
         };
       })
       .filter(Boolean);
@@ -107,8 +104,9 @@ export class Graph {
     const labels = Object.keys(targetMonth).filter((key) => key !== "total");
     const uiLabels = labels.map((label) => LabelNames[label]);
     const data = labels.map((label) => targetMonth[label]);
+    console.log("labelsss", labels);
     const backgroundColor = labels.map(
-      () => `rgba(${rand(0, 255)}, ${rand(0, 255)}, ${rand(0, 255)}, 0.5)`
+      (label) => BackgroundProductColors[label]
     );
 
     const dataset = {

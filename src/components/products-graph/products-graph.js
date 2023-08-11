@@ -61,7 +61,11 @@ function ProductsGraph() {
   return (
     <React.Fragment>
       <React.Fragment>
-        <Selector name="selector" context={store.graph.selector} />
+        <Selector
+          name="selector"
+          title="Production type Filter"
+          context={store.graph.selector}
+        />
         <Bar
           ref={chartRef}
           options={ChartOptions}

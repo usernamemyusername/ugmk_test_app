@@ -7,6 +7,8 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { ProductsContext } from "../../routes";
 import { ErrorMsg } from "../ui/error-msg";
 
+import { ChartOptions } from "./constants";
+
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export function FactoryDetails() {
@@ -40,7 +42,7 @@ export function FactoryDetails() {
         Production Statistics of Factory {pieData.factoryName} in{" "}
         {pieData.monthName} 
       </h1>
-      <Pie data={pieData.dataset} />;
+      <Pie options={ChartOptions} data={pieData.dataset} />;
     </div>
   );
 }

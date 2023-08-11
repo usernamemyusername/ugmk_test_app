@@ -1,3 +1,10 @@
 .selector {
   height: 30px;
 }
+
+.selector-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}

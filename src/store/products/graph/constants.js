@@ -13,7 +13,16 @@ export const Months = [
   "December",
 ];
 
-export const FactoryNames = ["A", "B"];
+export const FactoryNames = { 1: "A", 2: "B" };
+export const BackgroundFactoryColors = {
+  1: "rgb(255, 0, 0)",
+  2: "rgb(0, 0, 255)",
+};
+
+export const BackgroundProductColors = {
+  product1: "rgb(0, 158, 0)",
+  product2: "rgb(255, 165, 0)",
+};
 
 export const LabelNames = {
   total: "Total",
