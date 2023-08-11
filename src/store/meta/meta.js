@@ -4,6 +4,7 @@ export class Meta {
   isLoading = false;
   isLoaded = false;
   isError = false;
+  errorMsg = "";
 
   constructor() {
     makeObservable(this, {
@@ -27,9 +28,12 @@ export class Meta {
     this.isError = false;
   }
 
-  error() {
+  error(msg) {
     this.isLoading = false;
     this.isLoaded = true;
     this.isError = true;
+    if (msg) {
+      this.errorMsg = msg;
+    }
   }
 }

@@ -1,13 +1,15 @@
-import { observer } from "mobx-react-lite";
 import * as React from "react";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { observer } from "mobx-react-lite";
 import { Pie } from "react-chartjs-2";
-import { ContextData } from "../../App";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+
+import { ProductsContext } from "../../routes";
+import { ErrorMsg } from "../ui/error-msg";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export function FactoryDetails() {
-  const store = React.useContext(ContextData);
+  const store = React.useContext(ProductsContext);
 
   const dataset = React.useMemo(() => {
     if (!store.graph.dataset) {
@@ -15,7 +17,6 @@ export function FactoryDetails() {
     }
 
     const searchParams = new URLSearchParams(document.location.search);
-
     const factoryId = searchParams.get("factoryId");
     const monthId = searchParams.get("monthId");
 
@@ -25,11 +26,14 @@ export function FactoryDetails() {
     );
 
     return target;
-  }, [store.graph.dataset]);
+  }, [store.graph.dataset, store.graph]);
 
   if (!dataset) {
-    //TODO: spinner
-    return null;
+    return store.request.meta.isError ? (
+      <ErrorMsg msg={store.request.meta.errorMsg} />
+    ) : (
+      <React.Fragment />
+    );
   }
 
   return <Pie data={dataset} />;

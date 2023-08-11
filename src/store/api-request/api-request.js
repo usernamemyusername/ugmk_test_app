@@ -1,6 +1,6 @@
 import { makeObservable, observable } from "mobx";
 
-import { Meta } from "../../utils/stores/meta";
+import { Meta } from "../meta";
 
 import { METHODS } from "./constants";
 
@@ -32,7 +32,9 @@ export class ApiRequest {
       method,
       params,
     }).catch(() => {
-      this.meta.error();
+      this.meta.error(
+        "No data on localhost:3000 was found ;( Possibly there is no json server running on host machine. You can start it with command 'npm run server' "
+      );
     });
 
     try {

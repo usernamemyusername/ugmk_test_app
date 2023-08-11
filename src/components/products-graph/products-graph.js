@@ -12,9 +12,11 @@ import {
 } from "chart.js";
 import { Bar, getElementAtEvent } from "react-chartjs-2";
 
-import { ContextData } from "../../App";
-import { ChartOptions } from "./constants";
 import { Selector } from "../ui/selector";
+import { ProductsContext } from "../../routes";
+import { ErrorMsg } from "../ui/error-msg";
+
+import { ChartOptions } from "./constants";
 
 ChartJS.register(
   CategoryScale,
@@ -26,7 +28,7 @@ ChartJS.register(
 );
 
 function ProductsGraph() {
-  const store = React.useContext(ContextData);
+  const store = React.useContext(ProductsContext);
   const chartRef = React.useRef();
   const navigate = useNavigate();
 
@@ -50,19 +52,25 @@ function ProductsGraph() {
   };
 
   if (!store.graph.dataset) {
-    return <React.Fragment />;
+    return store.request.meta.isError ? (
+      <ErrorMsg msg={store.request.meta.errorMsg} />
+    ) : (
+      <React.Fragment />
+    );
   }
 
   return (
-    <>
-      <Selector name="selector" context={store.graph.selector} />
-      <Bar
-        ref={chartRef}
-        options={ChartOptions}
-        data={store.graph.dataset}
-        onClick={onClick}
-      />
-    </>
+    <React.Fragment>
+      <React.Fragment>
+        <Selector name="selector" context={store.graph.selector} />
+        <Bar
+          ref={chartRef}
+          options={ChartOptions}
+          data={store.graph.dataset}
+          onClick={onClick}
+        />
+      </React.Fragment>
+    </React.Fragment>
   );
 }
 

@@ -1,5 +1,5 @@
 import { makeObservable, computed, action, observable } from "mobx";
-import { ApiRequest } from "../../services/api-request";
+import { ApiRequest } from "../api-request";
 import { API } from "../../api";
 import { Products as ProductsDataStore } from "../../models/product/store";
 import { Graph } from "./graph";
@@ -28,6 +28,12 @@ export default class Products {
     }
 
     const data = await this.request.call();
+
+    if (this.request.meta.isError) {
+      // alert(
+      //   "No data on localhost:3000 was found ;( Possibly there is no json server running on host machine"
+      // );
+    }
 
     if (!this.request.meta.isError) {
       this.products.toClientFormat(data);
