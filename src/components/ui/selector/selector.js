@@ -1,6 +1,8 @@
 import { observer } from "mobx-react-lite";
 import React from "react";
 
+import "./styles.css";
+
 function Selector({ context, name }) {
   if (!context || !name) {
     return <React.Fragment />;
@@ -8,6 +10,7 @@ function Selector({ context, name }) {
 
   return (
     <select
+      className="selector"
       value={context.selectedOption.value}
       onChange={context.setSelectedOption}
       name={name}

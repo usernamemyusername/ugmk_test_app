@@ -3,7 +3,7 @@ import { makeObservable, computed, action, observable } from "mobx";
 import { rand } from "../../../utils/rand";
 import { Selector } from "../../selector";
 
-import { FactoryNames, Months } from "./constants";
+import { FactoryNames, LabelNames, Months } from "./constants";
 
 export class Graph {
   _dataset = [];
@@ -74,7 +74,7 @@ export class Graph {
       labels.map((label, index) => {
         return {
           value: index,
-          label,
+          label: LabelNames[label],
         };
       }),
       "products"
