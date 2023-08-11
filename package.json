@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "chart.js": "^4.3.3",
+    "concurrently": "^8.2.0",
+    "json-server": "^0.17.3",
     "mobx": "^6.10.0",
     "mobx-react-lite": "^4.0.3",
     "objectmodel": "^4.4.4",

@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite";
 import React from "react";
 
 function Selector({ context, name }) {
@@ -21,4 +20,4 @@ function Selector({ context, name }) {
   );
 }
 
-export default observer(Selector);
+export default React.memo(Selector);
