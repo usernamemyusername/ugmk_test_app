@@ -34,8 +34,6 @@ export function FactoryDetails() {
     );
   }
 
-  console.log("pieData", pieData);
-
   return (
     <div className="factory-details">
       <h1>
