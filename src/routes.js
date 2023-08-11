@@ -19,7 +19,10 @@ function AppRoutes() {
       <ProductsContext.Provider value={store}>
         <Routes>
           <Route path="/" element={<ProductsGraph />} />
-          <Route path="/factory" element={<FactoryDetails />} />
+          <Route
+            path="/detail/:factoryId/:monthId"
+            element={<FactoryDetails />}
+          />
         </Routes>
       </ProductsContext.Provider>
     </BrowserRouter>

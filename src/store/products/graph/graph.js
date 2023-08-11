@@ -105,13 +105,14 @@ export class Graph {
     const targetMonth = targetFactory.data[monthId];
 
     const labels = Object.keys(targetMonth).filter((key) => key !== "total");
+    const uiLabels = labels.map((label) => LabelNames[label]);
     const data = labels.map((label) => targetMonth[label]);
     const backgroundColor = labels.map(
       () => `rgba(${rand(0, 255)}, ${rand(0, 255)}, ${rand(0, 255)}, 0.5)`
     );
 
-    return {
-      labels,
+    const dataset = {
+      labels: uiLabels,
       datasets: [
         {
           label: "quantity: ",
@@ -119,6 +120,12 @@ export class Graph {
           backgroundColor,
         },
       ],
+    };
+
+    return {
+      dataset,
+      factoryName: FactoryNames[factoryId],
+      monthName: Months[monthId],
     };
   }
 

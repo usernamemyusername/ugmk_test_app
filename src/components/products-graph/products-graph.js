@@ -46,8 +46,7 @@ function ProductsGraph() {
     }
 
     navigate({
-      pathname: "/factory",
-      search: `?factoryId=${datasetIndex}&month=${index}`,
+      pathname: `/detail/${datasetIndex}/${index}`,
     });
   };
 
