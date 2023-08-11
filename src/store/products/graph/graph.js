@@ -3,7 +3,7 @@ import { makeObservable, computed, action, observable } from "mobx";
 import { rand } from "../../../utils/rand";
 import { Selector } from "../../selector";
 
-import { Months } from "./constants";
+import { FactoryNames, Months } from "./constants";
 
 export class Graph {
   _dataset = [];
@@ -86,7 +86,7 @@ export class Graph {
 
         return {
           data: Object.values(element),
-          label: "Factory " + factoryId,
+          label: "Factory " + FactoryNames[factoryId - 1],
           id: factoryId,
           backgroundColor: `rgba(${rand(0, 255)}, ${rand(0, 255)}, ${rand(
             0,

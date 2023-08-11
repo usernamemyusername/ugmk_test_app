@@ -12,3 +12,5 @@ export const Months = [
   "Ноя.",
   "Дек.",
 ];
+
+export const FactoryNames = ["A", "B"];
